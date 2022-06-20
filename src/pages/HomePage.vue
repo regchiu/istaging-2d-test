@@ -135,6 +135,51 @@ watch(showDialog, (showDialog, prevShowDialog) => {
   }
 })
 
+watch(
+  () => form.value.title,
+  (title, prevTitle) => {
+    if (title !== prevTitle) {
+      formError.value.title = null
+    }
+  }
+)
+
+watch(
+  () => form.value.author,
+  (author, prevAuthor) => {
+    if (author !== prevAuthor) {
+      formError.value.author = null
+    }
+  }
+)
+
+watch(
+  () => form.value.publicationDate,
+  (publicationDate, prevPublicationDate) => {
+    if (publicationDate !== prevPublicationDate) {
+      formError.value.publicationDate = null
+    }
+  }
+)
+
+watch(
+  () => form.value.isbn,
+  (isbn, prevIsbn) => {
+    if (isbn !== prevIsbn) {
+      formError.value.isbn = null
+    }
+  }
+)
+
+watch(
+  () => form.value.description,
+  (description, prevDescription) => {
+    if (description !== prevDescription) {
+      formError.value.description = null
+    }
+  }
+)
+
 onMounted(() => {
   retrieveBooks()
 })
