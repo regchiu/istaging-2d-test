@@ -10,6 +10,7 @@ import { useRouter } from 'vue-router'
 import type { Ref } from 'vue'
 import { httpKey } from '@/keys'
 import axios from 'axios'
+import { vScroll } from '@/directives/vScroll'
 
 type Form = {
   title: string
@@ -47,7 +48,7 @@ const router = useRouter()
 
 const http = inject(httpKey)
 
-const members: Ref<any[]> = ref([])
+const books: Ref<any[]> = ref([])
 const showDialog: Ref<boolean> = ref(false)
 const retrieveBooksLoading: Ref<boolean> = ref(false)
 const loadMoreLoading: Ref<boolean> = ref(false)
@@ -58,7 +59,7 @@ const currentPage: Ref<number> = ref(1)
 const itemsPerPage: Ref<number> = ref(30)
 const totalItems: Ref<number> = ref(0)
 
-const showLoadMore = computed(() => members.value.length < totalItems.value)
+const hasMore = computed(() => books.value.length < totalItems.value)
 
 async function retrieveBooks() {
   try {
@@ -75,7 +76,7 @@ async function retrieveBooks() {
       },
     })
     totalItems.value = response?.data['hydra:totalItems']
-    members.value = members.value.concat(response?.data['hydra:member'])
+    books.value = books.value.concat(response?.data['hydra:member'])
   } catch (error) {
     console.error(error)
   } finally {
@@ -126,6 +127,14 @@ function buildForm(payload?: Form) {
 
 function buildFormError(payload?: FormError) {
   return Object.assign({}, initialFormError, payload)
+}
+
+function onScroll() {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement
+
+  if (!loadMoreLoading.value && scrollTop + clientHeight >= scrollHeight - 50 && hasMore.value) {
+    loadMore()
+  }
 }
 
 watch(showDialog, (showDialog, prevShowDialog) => {
@@ -193,13 +202,13 @@ onMounted(() => {
       </AppButton>
     </template>
   </TheHeader>
-  <TheContainer>
+  <TheContainer v-scroll="onScroll">
     <div v-if="retrieveBooksLoading" class="loading-mask">
       <h2>Loading...</h2>
     </div>
     <div v-else class="books-wrapper">
       <AppCard
-        v-for="item in members"
+        v-for="item in books"
         class="books-wrapper__items"
         :key="item.id"
         :title="item.title"
@@ -216,7 +225,7 @@ onMounted(() => {
       <div v-if="loadMoreLoading" class="loading-mask">
         <h2>Load More Loading...</h2>
       </div>
-      <div v-if="showLoadMore" class="load-more-wrapper">
+      <div v-if="hasMore" class="load-more-wrapper">
         <AppButton class="load-more-button" @click="loadMore">
           <div class="load-more-button__label">Load More</div>
         </AppButton>
@@ -246,6 +255,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .loading-mask,
 .load-more-wrapper {
+  height: 50px;
   width: 100%;
   text-align: center;
 }
