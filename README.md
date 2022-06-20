@@ -34,5 +34,5 @@ TODO:
 - [ ] SSR.
 - [ ] SEO.
 - [ ] Unit Test.
-- [ ] Home page infinite scroll.
+- [x] Home page infinite scroll.
 - [ ] More than 10,000 data does not affect the browsing experience.
