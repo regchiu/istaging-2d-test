@@ -210,8 +210,7 @@ onMounted(() => {
   flex-wrap: wrap;
   &__items {
     cursor: pointer;
-    margin-right: 20px;
-    margin-bottom: 20px;
+    margin: 20px;
   }
 }
 
@@ -234,15 +233,15 @@ onMounted(() => {
 
 @media (min-width: 1280px) {
   .books-wrapper__items {
-    flex: 1 0 calc(33.3% - 20px);
-    max-width: calc(33.3% - 20px);
+    flex: 1 0 calc(33.3% - 40px);
+    max-width: calc(33.3% - 40px);
   }
 }
 
 @media (max-width: 1280px) {
   .books-wrapper__items {
-    flex: 1 0 calc(50% - 20px);
-    max-width: calc(50% - 20px);
+    flex: 1 0 calc(50% - 40px);
+    max-width: calc(50% - 40px);
   }
 }
 </style>
