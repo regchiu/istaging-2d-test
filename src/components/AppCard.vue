@@ -45,6 +45,7 @@ const props = defineProps<{
   line-height: 25px;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .subtitle {

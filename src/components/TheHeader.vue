@@ -22,6 +22,11 @@ const props = defineProps<{
 
   &__title {
     font-size: 24px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

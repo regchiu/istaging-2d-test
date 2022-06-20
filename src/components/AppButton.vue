@@ -25,7 +25,8 @@ const props = defineProps<{
 .app-button {
   display: inline-block;
   cursor: pointer;
-  background-color: #ffffff;
+  background-color: #dddddd;
+  color: #000000;
 
   &__label {
     font-size: 16px;
